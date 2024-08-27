@@ -4,6 +4,8 @@ let num1 = null;
 let num2 = null;
 let lockScreen = false;
 let isDecimal = false;
+let hitOp = false;
+let opToChange = null;
 
 
 let add = (a,b) => a+b;
@@ -48,26 +50,6 @@ for(const element of numButtons) {
             currOperator = opToChange;
             hitOp = false;
             opToChange = null;
-            //find out the operator to display it to full
-            let opString = "null";
-            switch(currOperator) {
-                case add:
-                    opString = "+";
-                    break;
-                case subtract:
-                    opString = "-";
-                    break;
-                case multiply:
-                    opString = "x";
-                    break;
-                case divide:
-                    opString = "/";
-                    break;
-                case power:
-                    opString = "^";
-                    break;
-            }
-            displayFull.textContent = displayCurrent.textContent + " " + opString + " ";
             displayCurrent.textContent = element.textContent;
         } else {
             //check if number too big to add more
@@ -81,8 +63,7 @@ for(const element of numButtons) {
     });
 };
 
-let hitOp = false;
-let opToChange = null;
+
 //let noNumsAllowed = false;
 
 function operatorListener(op) {
@@ -94,8 +75,33 @@ function operatorListener(op) {
     //we can still change until we lock in the operator using numbers
     if(currOperator == null) {
         num1 = parseFloat(displayCurrent.textContent);
-        hitOp = true;
+        //find out the operator to display it to full
+        let opString = "null";
         opToChange = op;
+        switch(op) {
+            case add:
+                opString = "+";
+                break;
+            case subtract:
+                opString = "-";
+                break;
+            case multiply:
+                opString = "x";
+                break;
+            case divide:
+                opString = "/";
+                break;
+            case power:
+                opString = "^";
+                break;
+        }
+        // if alr hit operator delete it from the full statement
+        let currString = displayFull.textContent;
+        if(hitOp) {
+            currString = currString.slice(0, -3);
+        }
+        displayFull.textContent = currString + " " + opString + " ";
+        hitOp = true;
     } else {
         //we are doing calculation
         num2 = parseFloat(displayCurrent.textContent);
