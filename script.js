@@ -48,8 +48,33 @@ for(const element of numButtons) {
             currOperator = opToChange;
             hitOp = false;
             opToChange = null;
+            //find out the operator to display it to full
+            let opString = "null";
+            switch(currOperator) {
+                case add:
+                    opString = "+";
+                    break;
+                case subtract:
+                    opString = "-";
+                    break;
+                case multiply:
+                    opString = "x";
+                    break;
+                case divide:
+                    opString = "/";
+                    break;
+                case power:
+                    opString = "^";
+                    break;
+            }
+            displayFull.textContent = displayCurrent.textContent + " " + opString + " ";
             displayCurrent.textContent = element.textContent;
         } else {
+            //check if number too big to add more
+            const str = displayCurrent.textContent;
+            if(str.length >= 20) {
+                return
+            }
             displayCurrent.textContent += element.textContent;
         }
         
@@ -72,12 +97,13 @@ function operatorListener(op) {
         hitOp = true;
         opToChange = op;
     } else {
-        //need to check if decimal is in solution or else for equals btn at least
+        //we are doing calculation
         num2 = parseFloat(displayCurrent.textContent);
         num1 = currOperator(num1, num2);
         currOperator = null;
         hitOp = true;
         opToChange = op;
+        displayFull.textContent += `${num2} = ${num1}`;
         displayCurrent.textContent = num1;
     }
     isDecimal = false;
@@ -107,18 +133,27 @@ powerBtn.addEventListener('click', () => {
 
 eqBtn.addEventListener('click', () => {
     if(currOperator != null) {
-        const str = displayCurrent.textContent;
+        let str = displayCurrent.textContent;
         num2 = parseFloat(str);
         num1 = currOperator(num1, num2);
         displayCurrent.textContent = num1;
+        str = displayCurrent.textContent;
         currOperator = null;
         hitOp = false;
         opToChange = null;
+
+        //displayFull
+        displayFull.textContent += `${num2} = ${num1}`;
+
         //check if decimal there
         if(str.includes(".")) {
             isDecimal = true;
         } else {
             isDecimal = false;
+        }
+        //check if NaN, if so lock screen
+        if(str == "NaN") {
+            lockScreen = true;
         }
     }
 });
@@ -128,6 +163,10 @@ delBtn.addEventListener('click', () => {
         return;
     }
     let str = displayCurrent.textContent;
+    //do not delete for Infinity as NAN
+    if(str == "Infinity") {
+        return;
+    }
     if(str.length > 0) {
         //check if removing the decimal point
         if(str.substring(str.length - 1) == ".") {
@@ -139,6 +178,7 @@ delBtn.addEventListener('click', () => {
 
 clearBtn.addEventListener('click', () => {
     displayCurrent.textContent = 0;
+    displayFull.textContent = "";
     num1 = null;
     num2 = null;
     currOperator = null;
@@ -157,11 +197,19 @@ decimalBtn.addEventListener('click', () => {
     if(isDecimal) {
         return;
     }
+    //for divide by 0 screen lock or if a not a number is there
+    if(lockScreen || parseFloat(displayCurrent.textContent) == NaN) {
+        return;
+    }
     displayCurrent.textContent += '.';
     isDecimal = true;
 });
 
 signBtn.addEventListener('click', () => {
+    //for divide by 0 screen lock or if a not a number is there
+    if(lockScreen || parseFloat(displayCurrent.textContent) == NaN) {
+        return;
+    }
     const str = displayCurrent.textContent;
     if(str.includes("-")) {
         displayCurrent.textContent = str.slice(1);
