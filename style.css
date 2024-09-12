@@ -10,7 +10,7 @@ body {
 #calc {
     height: 620px;
     width: 400px;
-    border-radius: 10px;
+    border-radius: 25px;
     border-width: 2px;
     border-color: black;
     border-style: solid;
