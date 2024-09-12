@@ -1,31 +1,48 @@
-#page {
+body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 100px;
+    background-color: azure;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 #calc {
-    height: 700px;
+    height: 620px;
     width: 400px;
     border-radius: 10px;
     border-width: 2px;
     border-color: black;
     border-style: solid;
+    background-color: #e0d8de;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding: 10px;
     gap: 20px;
 }
 
 #display {
     padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#displayCurrent {
+    font-size: 28px;
 }
 
 #keypad {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    align-self: center;
+    justify-content: center;
+    margin-left: 3px;
 }
 
 
@@ -33,4 +50,16 @@ button {
     width: 75px;
     height: 75px;
     border-radius: 10px;
+}
+
+.redBtn {
+    background-color: #D8141A;
+}
+
+.op {
+    background-color: #CE8311;
+}
+
+.num, .numChanger{
+    background-color: #227485;
 }
