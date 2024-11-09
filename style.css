@@ -1,5 +1,6 @@
 body {
     display: flex;
+    overflow: hidden;
     justify-content: center;
     align-items: center;
     margin-top: 100px;
@@ -30,6 +31,10 @@ body {
     justify-content: center;
     align-items: center;
     gap: 10px;
+    border: black;
+    border-radius: 20px;
+    background-color: rgb(181, 179, 179);
+    width: 300px;
 }
 
 #displayCurrent {
@@ -53,13 +58,13 @@ button {
 }
 
 .redBtn {
-    background-color: #D8141A;
+    background-color: rgb(210, 80, 80);
 }
 
 .op {
-    background-color: #CE8311;
+    background-color: darkorange;
 }
 
 .num, .numChanger{
-    background-color: #227485;
+    background-color: cornflowerblue;
 }
